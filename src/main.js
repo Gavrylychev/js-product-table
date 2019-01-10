@@ -12,8 +12,8 @@ let departmentHeader = document.getElementById('department');
 idHeader.addEventListener('click', () => sortDataBy('id'));
 priceHeader.addEventListener('click', () => sortDataBy('price'));
 titleHeader.addEventListener('click', () => sortStringDataBy('title'));
-colorHeader.addEventListener('click', () => sortDataBy('color'));
-departmentHeader.addEventListener('click', () => sortDataBy('department'));
+colorHeader.addEventListener('click', () => sortStringDataBy('color'));
+departmentHeader.addEventListener('click', () => sortStringDataBy('department'));
 let visibleData;
 let fullData;
 let clickCounter;
@@ -91,13 +91,26 @@ function sortStringDataBy(handler) {
     if(clickCounter < 2){
         clickCounter++;
         if (asc) {    
-            visibleData.sort((a,b) => a[handler].toLowerCase() > b[handler].toLowerCase());
-            handleData(visibleData);
+            visibleData.sort((a,b) => {
+                if(a[handler].toLowerCase() > b[handler].toLowerCase()){
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
             asc = false;
-          } else {
-            visibleData.sort((a,b) => a[handler].toLowerCase() < b[handler].toLowerCase());
             handleData(visibleData);
+        } else {
+            visibleData.sort((a,b) => {
+                if(a[handler].toLowerCase() < b[handler].toLowerCase()){
+                    return -1;
+                } else {
+                    return 0;
+                }
+                
+            });
             asc = true;
+            handleData(visibleData);
           }
     } else {
         handleData(fullData.slice(0, 20));
