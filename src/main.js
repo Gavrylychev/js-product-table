@@ -11,7 +11,7 @@ let colorHeader = document.getElementById('color');
 let departmentHeader = document.getElementById('department');
 idHeader.addEventListener('click', () => sortDataBy('id'));
 priceHeader.addEventListener('click', () => sortDataBy('price'));
-titleHeader.addEventListener('click', () => sortDataBy('title'));
+titleHeader.addEventListener('click', () => sortStringDataBy('title'));
 colorHeader.addEventListener('click', () => sortDataBy('color'));
 departmentHeader.addEventListener('click', () => sortDataBy('department'));
 let visibleData;
@@ -78,6 +78,24 @@ function sortDataBy(handler) {
             asc = false;
           } else {
             visibleData = visibleData.sort((a, b) => a[handler] - b[handler]);
+            handleData(visibleData);
+            asc = true;
+          }
+    } else {
+        handleData(fullData.slice(0, 20));
+        clickCounter = 0;
+    }
+}
+
+function sortStringDataBy(handler) {
+    if(clickCounter < 2){
+        clickCounter++;
+        if (asc) {    
+            visibleData.sort((a,b) => a[handler].toLowerCase() > b[handler].toLowerCase());
+            handleData(visibleData);
+            asc = false;
+          } else {
+            visibleData.sort((a,b) => a[handler].toLowerCase() < b[handler].toLowerCase());
             handleData(visibleData);
             asc = true;
           }
